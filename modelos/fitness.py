@@ -2,8 +2,8 @@ import numpy as np
 
 def fitness(estado_actual, estado_final):
 
-    #returns the numeric value of elements with an equal value in the two matrices
-    matches = 0
+    #returns the cost of the state, i.e. the number of differing elements in the two matrices
+    cost = 16*16
 
     rows = 16
     columns = 16
@@ -13,7 +13,7 @@ def fitness(estado_actual, estado_final):
 
             if estado_actual[i][j] == estado_final[i][j]:
 
-                #if the elements match, add one to matches
-                matches += 1
+                #if the elements match, subtract one from cost
+                cost -= 1
 
     return matches
