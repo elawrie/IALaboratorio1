@@ -1,12 +1,13 @@
 import numpy as np
-def isgoal(estado_actual, estado_final):
+from modelos.fitness import fitness
+def isgoal(estado_actual):
 
-    if (np.all(estado_actual, estado_final)):
+    if (fitness(estado_actual) == 0):
 
-        #If the two matrices are equal, return true
-        return 1
+        #If the matrix is the goal matrix, return true
+        return True
 
     else:
         #if not, return false
-        return 0
+        return False
 

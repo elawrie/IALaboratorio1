@@ -1,6 +1,11 @@
 import numpy as np
 
-def fitness(estado_actual, estado_final):
+def fitness(estado_actual):
+    # Set a random seed for reproducibility
+    np.random.seed(124)
+
+    # Generate a 16x16 matrix of random values between 0 and 1
+    estado_final = np.random.randint(2, size=(16, 16))
 
     #returns the cost of the state, i.e. the number of differing elements in the two matrices
     cost = 16*16
@@ -16,4 +21,4 @@ def fitness(estado_actual, estado_final):
                 #if the elements match, subtract one from cost
                 cost -= 1
 
-    return matches
+    return cost
