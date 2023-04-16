@@ -31,6 +31,7 @@ def main():
     print()
 
     # prueba la funcion expand_node
+    hijos = []
     hijos = expand_node(init_state)
     # imprime todos los hijos posibles del estado inicial 
     # FIXME: los matrices de los hijos no imprimen correctamente 
