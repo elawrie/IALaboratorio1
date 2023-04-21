@@ -3,7 +3,7 @@ import numpy as np
 # generar un estado inicial
 def make_initial():
     # Set a random seed for reproducibility
-    np.random.seed(123)
+    np.random.seed()
     # Generate a 16x16 matrix of random values between 0 and 1
     initial_state = np.random.randint(2, size=(16, 16))
     return initial_state

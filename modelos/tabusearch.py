@@ -3,6 +3,7 @@ import copy
 from modelos.fitness import fitness
 from modelos.bitflip import bit_flip
 from modelos.isgoal import isgoal
+from lectura import make_initial
 
 def tabu_search(initial_state, goal_state_matrix):
     tabu_list = []
@@ -12,19 +13,25 @@ def tabu_search(initial_state, goal_state_matrix):
     costo_matriz = 0 #Se usa para ver que tan diferente es de la 'goal_state_matrix'.
     i = 0
     j = 0
-    k = 0
+    profundidad_del_path = 0
     solucion_inicial = initial_state
     mejor_solucion = initial_state
     fitness_mejor_solucion = fitness(mejor_solucion, goal_state_matrix)
 
     #busca hasta que llega a la solucion final
-    while(k < 1000):
-
-        #usado para exitar el loop de busqueda de los vecinos
+    while(profundidad_del_path < 126):
+        if(profundidad_del_path == 125):
+            print("Path desechado. Se genera nueva solución inicial")
+            mejor_solucion = make_initial()
+            fitness_mejor_solucion = fitness(mejor_solucion, goal_state_matrix)
+            print(fitness_mejor_solucion)
+            profundidad_del_path = 0
+                
+        #usado para salir del loop de busqueda de los vecinos
         exit_vecinos = False
 
-        print("loop starts")
-        print("the initial state has a fitness of {}".format(fitness_mejor_solucion))
+        #print("loop starts")
+        #print("the initial state has a fitness of {}".format(fitness_mejor_solucion))
         i=0
         j=0
 
@@ -68,9 +75,9 @@ def tabu_search(initial_state, goal_state_matrix):
                         return path
 
                     else:
-                        print(("Found a neighbouring state with the fitness of {}".format(fitness_buffer)))
-                        print(mejor_solucion)
-                        print("---------------------------")
+                        #print(("Found a neighbouring state with the fitness of {}".format(fitness_buffer)))
+                        #print(mejor_solucion)
+                        #print("---------------------------")
 
                         #encontramos un vecino con mejor fitness, empezando el loop otra vez
                         exit_vecinos = True
@@ -86,7 +93,7 @@ def tabu_search(initial_state, goal_state_matrix):
         path.append(copy.deepcopy(mejor_solucion))
         tabu_list.append(copy.deepcopy(mejor_solucion))
         #print("the mejor_solucion is {}".format(fitness_mejor_solucion))
-        k += 1
+        profundidad_del_path = profundidad_del_path + 1
 
 
     return path
