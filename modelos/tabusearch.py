@@ -1,52 +1,95 @@
 import numpy as np
+import copy
+from modelos.fitness import fitness
+from modelos.bitflip import bit_flip
+from modelos.isgoal import isgoal
 
-
-def tabu_search(goal_state_matrix):
+def tabu_search(initial_state, goal_state_matrix):
     tabu_list = []
     mejor_solucion = []
-    path = [][]
+    path = []
     solucion_factible = False
     costo_matriz = 0 #Se usa para ver que tan diferente es de la 'goal_state_matrix'.
     i = 0
     j = 0
     k = 0
-    '''
-    while(solucion_factible == False):
-        solucion_inicial = solucion_aleatoria(tabu_list)
-        fitness_mejor_solucion = fitness(solucion_inicial)
-        tabu_list.append(solucion_inicial)
-        
+    solucion_inicial = initial_state
+    mejor_solucion = initial_state
+    fitness_mejor_solucion = fitness(mejor_solucion, goal_state_matrix)
+
+    #busca hasta que llega a la solucion final
+    while(k < 1000):
+
+        #usado para exitar el loop de busqueda de los vecinos
+        exit_vecinos = False
+
+        print("loop starts")
+        print("the initial state has a fitness of {}".format(fitness_mejor_solucion))
+        i=0
+        j=0
+
         #Aca se podría definir si la tabu list tiene que ir sacando elementos,
         #o si la dejamos teóricamente infinita de memoria.
-        
-        costo_matriz = fitness(solucion_inicial)
-        path = copy.deepcopy(solucion_inicial)
+
+        #que es el costo_matriz
+        #costo_matriz = fitness(solucion_inicial)
+
         
         #Primer while considera el largo del path#
-        while( i < 10):
-            #Segundo while busca en la vecindad. 16x16= 256#
-            while( j < 256):
-                buffer = bitFlip(solucion_inicial, j)        
-                fitness_buffer = fitness(buffer)
-                if(fitness_buffer > fitness_mejor_solucion):
+        #este innecesario?
+
+            #buscando todos los vecinos
+
+        #these two loops will be exited as soon as a state with a better fitness is found.
+        #not all neighbouring states will be searched because the difference in fitness between
+        #two neighbouring states cannot be higher than 1, if one element is changed at a time
+        while( j < 16 and not exit_vecinos):
+
+            while(i < 16 and not exit_vecinos):
+
+                buffer = bit_flip(copy.deepcopy(mejor_solucion),i, j)
+                fitness_buffer = fitness(buffer,goal_state_matrix)
+
+
+
+                if(fitness_buffer < fitness_mejor_solucion):
+                    #print ("old: {} .... new: {}" .format(fitness_mejor_solucion,fitness_buffer))
                     fitness_mejor_solucion = fitness_buffer
-                    k = j
-                solucion_factible = isGoal(buffer)
-                if(solucion_factible == True):
-                    path = copy.deepcopy(buffer)
-                    break;
-                j = j + 1
-        #Si no se encuentra goal state, entonces en path colocamos la matriz más cercana
-        buffer = bitFlip(solucion_inicial, j)
-        path = deep.copy(buffer)
-        solucion_inicial = buffer # Esta línea  funciona en teoría, pero creo que cambiaré nombres un poco para que sea más semánticamente correcto.
-        i = i + 1
-        j = 0
-        k = 0
-        
-        
-        Return path 
-      '''
+                    mejor_solucion = buffer
+                    #printing to see if it decreases over iterations
+
+                    #que es eso?
+                    #k = j
+                    solucion_factible = isgoal(buffer,goal_state_matrix)
+                    if (solucion_factible == True):
+                        #terminó la busqueda
+                        path = copy.deepcopy(buffer)
+                        print("The search is finished!!")
+                        return path
+
+                    else:
+                        print(("Found a neighbouring state with the fitness of {}".format(fitness_buffer)))
+                        print(mejor_solucion)
+                        print("---------------------------")
+
+                        #encontramos un vecino con mejor fitness, empezando el loop otra vez
+                        exit_vecinos = True
+
+
+                i += 1
+            i = 0
+            j = j + 1
+
+            #añadiendo la mejor de los vecinos al path
+
+        #the path doesn't work perfectly yet, needs to be fixed
+        path.append(copy.deepcopy(mejor_solucion))
+        tabu_list.append(copy.deepcopy(mejor_solucion))
+        #print("the mejor_solucion is {}".format(fitness_mejor_solucion))
+        k += 1
+
+
+    return path
       
 ####COMENTARIOS ####
    #No hay implementación  en esta versión para guardar paths fallidos aún. 

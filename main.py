@@ -1,9 +1,11 @@
+
 from modelos.fitness import fitness
 from modelos.isgoal import isgoal
 from modelos.bitflip import bit_flip
 from modelos.expandnode import expand_node
 from lectura import make_initial
 from lectura import make_final
+from modelos.tabusearch import tabu_search
 from lectura import print_matrix
 import numpy as np
 
@@ -37,6 +39,15 @@ def main():
     # imprime todos los hijos posibles del estado inicial 
     # print("are equal: ", isgoal(hijos[0], hijos[2]))
     # print(hijos)
+
+    path = tabu_search(init_state,final_state)
+
+
+    #testing if the fitness improves with iterations..
+    i = 0
+
+
+    print("finished")
 
 if __name__ == "__main__":
     main()
