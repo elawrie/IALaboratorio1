@@ -14,16 +14,38 @@ def tabu_search(initial_state, goal_state_matrix):
     i = 0
     j = 0
     profundidad_del_path = 0
-    total_de_paths_generados = 0
+    total_de_paths_generados = 1
     solucion_inicial = initial_state
     mejor_solucion = initial_state
     fitness_mejor_solucion = fitness(mejor_solucion, goal_state_matrix)
+    tabu_list.append(mejor_solucion) #Se agrega primer intento a la tabu list
+
 
     #busca hasta que llega a la solucion final
     while(profundidad_del_path < 126):
         if(profundidad_del_path == 125):
             print("Path desechado. Se genera nueva solución inicial")
-            mejor_solucion = make_initial()
+            soy_una_solucion_inicial_tabu = True #Tengo que ver si se puede instanciar en if. Carlos 
+            #Se comprueba que nueva instancia del path, no se encuentre en la tabu list
+            if(soy_una_solucion_inicial_tabu == True):
+                mejor_solucion = make_initial()
+                soy_una_solucion_inicial_tabu = False
+                y = 0 #Corrige problema al pasar x como print(tabu_list[x]). Casting Error. 
+                for x in tabu_list:
+                    #Begin debugging#
+                    print("----------------------------------")
+                    print("|     Elemento Tabu_list " + str(y+1) + "       |")
+                    print("----------------------------------")
+                    print(tabu_list[y]) 
+                    #End debugging#
+                    if(isgoal(tabu_list[y], mejor_solucion) == True):
+                        print("Se ha encontrado una solución generada que es tabú")
+                        soy_una_solucion_inicial_tabu = True
+                    y +=1 #Solución temporal. Estoy seguro que se puede hacer de otra manera. Carlos
+
+
+
+            tabu_list.append(copy.deepcopy(mejor_solucion)) #Se agrega nueva instancia a la tabu list
             fitness_mejor_solucion = fitness(mejor_solucion, goal_state_matrix)
             total_de_paths_generados += 1
             print(fitness_mejor_solucion)
@@ -92,7 +114,6 @@ def tabu_search(initial_state, goal_state_matrix):
 
         #the path doesn't work perfectly yet, needs to be fixed
         path.append(copy.deepcopy(mejor_solucion))
-        tabu_list.append(copy.deepcopy(mejor_solucion))
         #print("the mejor_solucion is {}".format(fitness_mejor_solucion))
         profundidad_del_path = profundidad_del_path + 1
 
