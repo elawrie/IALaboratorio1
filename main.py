@@ -41,8 +41,21 @@ def main():
     # print(hijos)
 
     path = tabu_search(init_state,final_state)
+    print("Path generado: ")
+    y = 0 #Corrige problema al pasar x como print(tabu_list[x]). Casting Error. 
+    for x in path:
+        #Begin debugging#
+        print(" ---------------------------------")
+        print("|   Estado path número " + str(y+1) + "        |")
+        print(" ---------------------------------")
+        print(path[y]) 
+        y += 1
+        #End debugging#
 
 
+    #print("Path final:")
+    #print(final_state)
+    
     #testing if the fitness improves with iterations..
     i = 0
 

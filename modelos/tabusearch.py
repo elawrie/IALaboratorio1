@@ -25,24 +25,25 @@ def tabu_search(initial_state, goal_state_matrix):
     while(profundidad_del_path < 126):
         if(profundidad_del_path == 125):
             print("Path desechado. Se genera nueva solución inicial")
+            path.clear() #Se limpiar path para crear otro completamente nuevo.
             soy_una_solucion_inicial_tabu = True #Tengo que ver si se puede instanciar en if. Carlos 
-            #Se comprueba que nueva instancia del path, no se encuentre en la tabu list
+            #Se comprueba que nueva instancia del path, no se encuentre en la tabu list.
             if(soy_una_solucion_inicial_tabu == True):
                 mejor_solucion = make_initial()
                 soy_una_solucion_inicial_tabu = False
                 y = 0 #Corrige problema al pasar x como print(tabu_list[x]). Casting Error. 
                 for x in tabu_list:
                     #Begin debugging#
-                    print("----------------------------------")
-                    print("|     Elemento Tabu_list " + str(y+1) + "       |")
-                    print("----------------------------------")
+                    print(" ---------------------------------")
+                    print("|     Elemento Tabu_list " + str(y+1) + "        |")
+                    print(" ---------------------------------")
                     print(tabu_list[y]) 
                     #End debugging#
                     if(isgoal(tabu_list[y], mejor_solucion) == True):
                         print("Se ha encontrado una solución generada que es tabú")
                         soy_una_solucion_inicial_tabu = True
                     y +=1 #Solución temporal. Estoy seguro que se puede hacer de otra manera. Carlos
-
+                    ### HAY QUE HACER TESTING A LA TABU LIST. SE DEBE INSTANCIAR UNA MATRIZ IGUAL
 
 
             tabu_list.append(copy.deepcopy(mejor_solucion)) #Se agrega nueva instancia a la tabu list
@@ -59,8 +60,6 @@ def tabu_search(initial_state, goal_state_matrix):
         i=0
         j=0
 
-        #Aca se podría definir si la tabu list tiene que ir sacando elementos,
-        #o si la dejamos teóricamente infinita de memoria.
 
         #que es el costo_matriz
         #costo_matriz = fitness(solucion_inicial)
@@ -74,6 +73,8 @@ def tabu_search(initial_state, goal_state_matrix):
         #these two loops will be exited as soon as a state with a better fitness is found.
         #not all neighbouring states will be searched because the difference in fitness between
         #two neighbouring states cannot be higher than 1, if one element is changed at a time
+
+        path.append(mejor_solucion)
         while( j < 16 and not exit_vecinos):
 
             while(i < 16 and not exit_vecinos):
@@ -87,16 +88,16 @@ def tabu_search(initial_state, goal_state_matrix):
                     #print ("old: {} .... new: {}" .format(fitness_mejor_solucion,fitness_buffer))
                     fitness_mejor_solucion = fitness_buffer
                     mejor_solucion = buffer
+                    path.append(mejor_solucion)
                     #printing to see if it decreases over iterations
 
                     solucion_factible = isgoal(buffer,goal_state_matrix)
                     if (solucion_factible == True):
                         #terminó la busqueda
-                        path = copy.deepcopy(buffer)
                         print("The search is finished!!")
                         print("Total paths generados: " + str(total_de_paths_generados))
+                        print("Profunidad del path exitoso: " + str(profundidad_del_path + 1) + " estados") 
                         return path
-
                     else:
                         #print(("Found a neighbouring state with the fitness of {}".format(fitness_buffer)))
                         #print(mejor_solucion)
@@ -122,11 +123,3 @@ def tabu_search(initial_state, goal_state_matrix):
 ####COMENTARIOS ####
    #No hay implementación  en esta versión para guardar paths fallidos aún. 
    #Solo se guarda el path que logra encontrar la solución
-            
-        
-        
-    
-    
-    
-
-
