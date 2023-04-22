@@ -40,7 +40,9 @@ def main():
     # print("are equal: ", isgoal(hijos[0], hijos[2]))
     # print(hijos)
 
-    path = tabu_search(init_state,final_state)
+    path = []
+    paths_desechados = []
+    path,paths_desechados = tabu_search(init_state,final_state)
     print("Path generado: ")
     y = 0 #Corrige problema al pasar x como print(tabu_list[x]). Casting Error. 
     for x in path:
@@ -52,6 +54,17 @@ def main():
         y += 1
         #End debugging#
 
+    #Se imprimen paths fracasados
+    print(paths_desechados)
+    y = 0
+    for x in paths_desechados:
+        #Begin debugging#
+        print(" ---------------------------------")
+        print("|   path fallido número " + str(y+1) + "        |")
+        print(" ---------------------------------")
+        print(paths_desechados[y]) 
+        y += 1
+        #End debugging#
 
     #print("Path final:")
     #print(final_state)

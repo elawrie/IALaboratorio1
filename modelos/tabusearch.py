@@ -9,6 +9,7 @@ def tabu_search(initial_state, goal_state_matrix):
     tabu_list = []
     mejor_solucion = []
     path = []
+    paths_desechados = []
     solucion_factible = False
     costo_matriz = 0 #Se usa para ver que tan diferente es de la 'goal_state_matrix'.
     i = 0
@@ -25,7 +26,8 @@ def tabu_search(initial_state, goal_state_matrix):
     while(profundidad_del_path < 126):
         if(profundidad_del_path == 125):
             print("Path desechado. Se genera nueva solución inicial")
-            path.clear() #Se limpiar path para crear otro completamente nuevo.
+            paths_desechados.append(path)
+            path = [] #Se limpiar path para crear otro completamente nuevo.
             soy_una_solucion_inicial_tabu = True #Tengo que ver si se puede instanciar en if. Carlos 
             #Se comprueba que nueva instancia del path, no se encuentre en la tabu list.
             if(soy_una_solucion_inicial_tabu == True):
@@ -44,6 +46,10 @@ def tabu_search(initial_state, goal_state_matrix):
                         soy_una_solucion_inicial_tabu = True
                     y +=1 #Solución temporal. Estoy seguro que se puede hacer de otra manera. Carlos
                     ### HAY QUE HACER TESTING A LA TABU LIST. SE DEBE INSTANCIAR UNA MATRIZ IGUAL
+                if(soy_una_solucion_inicial_tabu == False):
+                    path.append(mejor_solucion)
+               
+
 
 
             tabu_list.append(copy.deepcopy(mejor_solucion)) #Se agrega nueva instancia a la tabu list
@@ -74,7 +80,6 @@ def tabu_search(initial_state, goal_state_matrix):
         #not all neighbouring states will be searched because the difference in fitness between
         #two neighbouring states cannot be higher than 1, if one element is changed at a time
 
-        path.append(mejor_solucion)
         while( j < 16 and not exit_vecinos):
 
             while(i < 16 and not exit_vecinos):
@@ -96,8 +101,8 @@ def tabu_search(initial_state, goal_state_matrix):
                         #terminó la busqueda
                         print("The search is finished!!")
                         print("Total paths generados: " + str(total_de_paths_generados))
-                        print("Profunidad del path exitoso: " + str(profundidad_del_path + 1) + " estados") 
-                        return path
+                        print("Profunidad del path exitoso: " + str(profundidad_del_path) + " estados") 
+                        return path, paths_desechados
                     else:
                         #print(("Found a neighbouring state with the fitness of {}".format(fitness_buffer)))
                         #print(mejor_solucion)
@@ -114,12 +119,9 @@ def tabu_search(initial_state, goal_state_matrix):
             #añadiendo la mejor de los vecinos al path
 
         #the path doesn't work perfectly yet, needs to be fixed
-        path.append(copy.deepcopy(mejor_solucion))
+        #path.append(copy.deepcopy(mejor_solucion))
         #print("the mejor_solucion is {}".format(fitness_mejor_solucion))
-        profundidad_del_path = profundidad_del_path + 1
+        profundidad_del_path += 1 
 
     return path
       
-####COMENTARIOS ####
-   #No hay implementación  en esta versión para guardar paths fallidos aún. 
-   #Solo se guarda el path que logra encontrar la solución
