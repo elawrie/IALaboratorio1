@@ -11,7 +11,7 @@ def tabu_search(initial_state, goal_state_matrix):
     path = []
     paths_desechados = []
     solucion_factible = False
-    costo_matriz = 0 #Se usa para ver que tan diferente es de la 'goal_state_matrix'.
+    costo_matriz = 0 #Se usa para ver que tan diferente es un estado de la 'goal_state_matrix'.
     i = 0
     j = 0
     profundidad_del_path = 0
@@ -22,14 +22,15 @@ def tabu_search(initial_state, goal_state_matrix):
     tabu_list.append(mejor_solucion) #Se agrega primer intento a la tabu list
 
 
-    #busca hasta que llega a la solucion final
+    #Busca hasta que llega a una solucion final. Profunidad máxima de 125 Estados concatenados del original.
     while(profundidad_del_path < 126):
+        #Si se han realizado 125 Estados desde un path inicial. Se instancia otro nuevo.
         if(profundidad_del_path == 125):
             print("Path desechado. Se genera nueva solución inicial")
             paths_desechados.append(path)
-            path = [] #Se limpiar path para crear otro completamente nuevo.
-            soy_una_solucion_inicial_tabu = True #Tengo que ver si se puede instanciar en if. Carlos 
-            #Se comprueba que nueva instancia del path, no se encuentre en la tabu list.
+            path = [] #Se borra contenido de 'path' para crear otro completamente nuevo.
+            soy_una_solucion_inicial_tabu = True 
+            #Se comprueba que nueva instancia de 'path', no se encuentre en la tabu list.
             if(soy_una_solucion_inicial_tabu == True):
                 mejor_solucion = make_initial()
                 soy_una_solucion_inicial_tabu = False
@@ -49,37 +50,22 @@ def tabu_search(initial_state, goal_state_matrix):
                 if(soy_una_solucion_inicial_tabu == False):
                     path.append(mejor_solucion)
                
-
-
-
-            tabu_list.append(copy.deepcopy(mejor_solucion)) #Se agrega nueva instancia a la tabu list
+            #Se ajustan variables para que nueva iteración funcione correctamente
+            tabu_list.append(copy.deepcopy(mejor_solucion)) #Se agrega nueva Estado inicial a la tabu list
             fitness_mejor_solucion = fitness(mejor_solucion, goal_state_matrix)
             total_de_paths_generados += 1
             print(fitness_mejor_solucion)
             profundidad_del_path = 0
                 
-        #usado para salir del loop de busqueda de los vecinos
+        #Se ajustan variables a usarse en bucle while anidado
         exit_vecinos = False
-
-        #print("loop starts")
-        #print("the initial state has a fitness of {}".format(fitness_mejor_solucion))
         i=0
         j=0
 
-
-        #que es el costo_matriz
-        #costo_matriz = fitness(solucion_inicial)
-
-        
-        #Primer while considera el largo del path#
-        #este innecesario?
-
-            #buscando todos los vecinos
-
-        #these two loops will be exited as soon as a state with a better fitness is found.
-        #not all neighbouring states will be searched because the difference in fitness between
-        #two neighbouring states cannot be higher than 1, if one element is changed at a time
-
+        #Estos dos ciclos while seran terminados tan pronto como se encuentre un vecino de 'mejor_solucion'
+        #que poseea mejor fitness que la matriz contenida en la variable mencionada.  De esta forma no se busca 
+        #en toda la vecindad, ya que solo es posible encontrar soluciones mejores con diferencia de 1 en el fitness.
+        #En palabras simples: Las soluciones mejores solo pueden ser de un bit mejor con este método de exploración.
         while( j < 16 and not exit_vecinos):
 
             while(i < 16 and not exit_vecinos):
@@ -99,29 +85,23 @@ def tabu_search(initial_state, goal_state_matrix):
                     solucion_factible = isgoal(buffer,goal_state_matrix)
                     if (solucion_factible == True):
                         #terminó la busqueda
-                        print("The search is finished!!")
+                        print("Busqueda finalizada!!")
                         print("Total paths generados: " + str(total_de_paths_generados))
                         print("Profunidad del path exitoso: " + str(profundidad_del_path) + " estados") 
+                        #Se envía listas a main.py para su posterior impresión
                         return path, paths_desechados
                     else:
                         #print(("Found a neighbouring state with the fitness of {}".format(fitness_buffer)))
                         #print(mejor_solucion)
                         #print("---------------------------")
 
-                        #encontramos un vecino con mejor fitness, empezando el loop otra vez
+                        #Si se encuentra un vecino con mejor fitness, empezamos el loop general otra vez
+                        #cambiando el valor de 'exit_vecinos'
                         exit_vecinos = True
-
 
                 i += 1
             i = 0
             j = j + 1
 
-            #añadiendo la mejor de los vecinos al path
-
-        #the path doesn't work perfectly yet, needs to be fixed
-        #path.append(copy.deepcopy(mejor_solucion))
-        #print("the mejor_solucion is {}".format(fitness_mejor_solucion))
+        #Se actualiza registro de la profundiad del path actual buscado
         profundidad_del_path += 1 
-
-    return path
-      

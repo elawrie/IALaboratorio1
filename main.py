@@ -1,4 +1,3 @@
-
 from modelos.fitness import fitness
 from modelos.isgoal import isgoal
 from modelos.bitflip import bit_flip
@@ -15,7 +14,7 @@ def main():
     # imprime el estado inicial
     # print_matrix(init_state)
 
-    # separa los matrices 
+    # separa las matrices 
     print()
 
     # hace un estado final 
@@ -69,11 +68,9 @@ def main():
     #print("Path final:")
     #print(final_state)
     
-    #testing if the fitness improves with iterations..
-    i = 0
 
 
-    print("finished")
+    print("Terminado")
 
 if __name__ == "__main__":
     main()

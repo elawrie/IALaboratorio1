@@ -3,7 +3,7 @@ import numpy as np
 def fitness(estado_actual, estado_final):
     # !!! CREO QUE SEA MEJOR DEFINIR EL ESTADO FINAL AFUERA DE ESTA FUNCION -> ahora esta en lectura.py !!!
 
-    #returns the cost of the state, i.e. the number of differing elements in the two matrices
+    #Retorna la diferencia de bits entra la matríz evaluada, y la de estado objetivo a conseguir.
     cost = 16*16
 
     rows = 16
@@ -14,7 +14,7 @@ def fitness(estado_actual, estado_final):
 
             if estado_actual[i][j] == estado_final[i][j]:
 
-                #if the elements match, subtract one from cost
+                #Si los elementos son iguales, entonces se substrae uno a cost.
                 cost -= 1
 
     return cost

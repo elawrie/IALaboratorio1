@@ -6,5 +6,5 @@ def bit_flip(matrix, i, j):
     # cambia el bit a 0 si el valor es 1
     else:
         matrix[i, j] = 0
-    # retorna el matrix con un bit de diferencia 
+    # retorna la matríz ccon un bit de diferencia 
     return matrix
