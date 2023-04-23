@@ -15,7 +15,7 @@ def main():
     # print_matrix(init_state)
 
     # separa las matrices 
-    print()
+    # print()
 
     # hace un estado final 
     final_state = make_final()
@@ -54,14 +54,15 @@ def main():
         #End debugging#
 
     #Se imprimen paths fracasados
-    print(paths_desechados)
+    # print(paths_desechados)
     y = 0
     for x in paths_desechados:
         #Begin debugging#
         print(" ---------------------------------")
         print("|   path fallido número " + str(y+1) + "        |")
         print(" ---------------------------------")
-        print(paths_desechados[y]) 
+        for path in paths_desechados[y]:
+            print(path) 
         y += 1
         #End debugging#
 

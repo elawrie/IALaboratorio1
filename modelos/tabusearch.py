@@ -4,6 +4,7 @@ from modelos.fitness import fitness
 from modelos.bitflip import bit_flip
 from modelos.isgoal import isgoal
 from lectura import make_initial
+from modelos.expandnode import expand_node
 
 def tabu_search(initial_state, goal_state_matrix):
     tabu_list = []
@@ -66,23 +67,24 @@ def tabu_search(initial_state, goal_state_matrix):
         #que poseea mejor fitness que la matriz contenida en la variable mencionada.  De esta forma no se busca 
         #en toda la vecindad, ya que solo es posible encontrar soluciones mejores con diferencia de 1 en el fitness.
         #En palabras simples: Las soluciones mejores solo pueden ser de un bit mejor con este método de exploración.
-        while( j < 16 and not exit_vecinos):
+        
 
-            while(i < 16 and not exit_vecinos):
+        # call expand node
+        all_neighbors = expand_node(mejor_solucion)
 
-                buffer = bit_flip(copy.deepcopy(mejor_solucion),i, j)
-                fitness_buffer = fitness(buffer,goal_state_matrix)
-
-
-
+        # loop through all neighbors and do the comparison 
+        
+        for neighbor in all_neighbors:
+            if (exit_vecinos == False):
+                fitness_buffer = fitness(neighbor,goal_state_matrix)
                 if(fitness_buffer < fitness_mejor_solucion):
                     #print ("old: {} .... new: {}" .format(fitness_mejor_solucion,fitness_buffer))
                     fitness_mejor_solucion = fitness_buffer
-                    mejor_solucion = buffer
+                    mejor_solucion = neighbor
                     path.append(mejor_solucion)
                     #printing to see if it decreases over iterations
 
-                    solucion_factible = isgoal(buffer,goal_state_matrix)
+                    solucion_factible = isgoal(neighbor,goal_state_matrix)
                     if (solucion_factible == True):
                         #terminó la busqueda
                         print("Busqueda finalizada!!")
@@ -98,10 +100,8 @@ def tabu_search(initial_state, goal_state_matrix):
                         #Si se encuentra un vecino con mejor fitness, empezamos el loop general otra vez
                         #cambiando el valor de 'exit_vecinos'
                         exit_vecinos = True
-
-                i += 1
-            i = 0
-            j = j + 1
+            else:
+                break
 
         #Se actualiza registro de la profundiad del path actual buscado
         profundidad_del_path += 1 
