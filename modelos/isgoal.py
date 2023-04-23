@@ -4,10 +4,10 @@ def isgoal(estado_actual, estado_final):
 
     if (fitness(estado_actual, estado_final) == 0):
 
-        #If the matrix is the goal matrix, return true
+        #Si las matrices coinciden, se entrega TRue
         return True
 
     else:
-        #if not, return false
+        #Si no coinciden, entonces se entrega False
         return False
 
