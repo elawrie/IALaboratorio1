@@ -9,36 +9,17 @@ from lectura import print_matrix
 import numpy as np
 
 def main():
-    # crea un estado inicial
+    #Crear un estado inicial
     init_state = make_initial()
-    # imprime el estado inicial
-    # print_matrix(init_state)
 
-    # separa las matrices 
-    # print()
-
-    # hace un estado final 
+    #Crear un estado final 
     final_state = make_final()
-    # imprime el estado final 
-    # print_matrix(final_state)
 
-    # chequea el fitness y si el estado inicial es el "goal"
-    print("costo: ", fitness(init_state, final_state))
-    print("is goal: ", isgoal(init_state, final_state))
+    #Chequear el fitness y si el estado inicial es el "goal"
+    print("Costo: ", fitness(init_state, final_state))
+    print("Es el estado objetivo? ", isgoal(init_state, final_state))
 
-    # prueba la funcion de bit_flip
-    # bit_flip(init_state, 0, 0)
-    # print_matrix(init_state)
-    print()
-
-    # prueba la funcion expand_node
-    hijos = []
-    hijos = expand_node(init_state)
-    
-    # imprime todos los hijos posibles del estado inicial 
-    # print("are equal: ", isgoal(hijos[0], hijos[2]))
-    # print(hijos)
-
+    #Realizar la búsqueda
     path = []
     paths_desechados = []
     path,paths_desechados = tabu_search(init_state,final_state)
@@ -49,12 +30,11 @@ def main():
         print(" ---------------------------------")
         print("|   Estado path número " + str(y+1) + "        |")
         print(" ---------------------------------")
-        print(path[y]) 
+        print_matrix(path[y])
         y += 1
         #End debugging#
 
     #Se imprimen paths fracasados
-    # print(paths_desechados)
     y = 0
     for x in paths_desechados:
         #Begin debugging#
@@ -62,14 +42,9 @@ def main():
         print("|   path fallido número " + str(y+1) + "        |")
         print(" ---------------------------------")
         for path in paths_desechados[y]:
-            print(path) 
+            print_matrix(path)
         y += 1
         #End debugging#
-
-    #print("Path final:")
-    #print(final_state)
-    
-
 
     print("Terminado")
 

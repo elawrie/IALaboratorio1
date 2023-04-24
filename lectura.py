@@ -12,8 +12,7 @@ def make_final():
     final_state = np.random.randint(2, size=(16, 16))
     return final_state
 
-#Carlos: Puedo borrar esto no ? 
-# function that print a given matrix
+#Función que imprime una matríz
 def print_matrix(state):
   for row in state:
     print(row)

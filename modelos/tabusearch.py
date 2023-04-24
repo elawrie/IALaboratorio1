@@ -37,7 +37,7 @@ def tabu_search(initial_state, goal_state_matrix):
                 soy_una_solucion_inicial_tabu = False
                 y = 0 #Corrige problema al pasar x como print(tabu_list[x]). Casting Error. 
                 for x in tabu_list:
-                    #Begin debugging#
+                    #Begin debugging
                     print(" ---------------------------------")
                     print("|     Elemento Tabu_list " + str(y+1) + "        |")
                     print(" ---------------------------------")
@@ -47,7 +47,6 @@ def tabu_search(initial_state, goal_state_matrix):
                         print("Se ha encontrado una solución generada que es tabú")
                         soy_una_solucion_inicial_tabu = True
                     y +=1 #Solución temporal. Estoy seguro que se puede hacer de otra manera. Carlos
-                    ### HAY QUE HACER TESTING A LA TABU LIST. SE DEBE INSTANCIAR UNA MATRIZ IGUAL
                 if(soy_una_solucion_inicial_tabu == False):
                     path.append(mejor_solucion)
                
@@ -63,40 +62,34 @@ def tabu_search(initial_state, goal_state_matrix):
         i=0
         j=0
 
-        #Estos dos ciclos while seran terminados tan pronto como se encuentre un vecino de 'mejor_solucion'
-        #que poseea mejor fitness que la matriz contenida en la variable mencionada.  De esta forma no se busca 
-        #en toda la vecindad, ya que solo es posible encontrar soluciones mejores con diferencia de 1 en el fitness.
-        #En palabras simples: Las soluciones mejores solo pueden ser de un bit mejor con este método de exploración.
-        
+        '''
+        Estos dos ciclos while seran terminados tan pronto como se encuentre un vecino de 'mejor_solucion'
+        que poseea mejor fitness que la matriz contenida en la variable mencionada.  De esta forma no se busca 
+        en toda la vecindad, ya que solo es posible encontrar soluciones mejores con diferencia de 1 en el fitness.
+        En palabras simples: Las soluciones mejores solo pueden ser de un bit mejor con este método de exploración.
+        '''
 
-        # call expand node
+        #Llamar expand_node
         all_neighbors = expand_node(mejor_solucion)
 
-        # loop through all neighbors and do the comparison 
-        
+        #Recorrer todos los vecinos para comparar y buscar el vecino mejor 
         for neighbor in all_neighbors:
             if (exit_vecinos == False):
                 fitness_buffer = fitness(neighbor,goal_state_matrix)
+                #Si se encuentra un vecino mejor
                 if(fitness_buffer < fitness_mejor_solucion):
-                    #print ("old: {} .... new: {}" .format(fitness_mejor_solucion,fitness_buffer))
                     fitness_mejor_solucion = fitness_buffer
                     mejor_solucion = neighbor
                     path.append(mejor_solucion)
-                    #printing to see if it decreases over iterations
-
                     solucion_factible = isgoal(neighbor,goal_state_matrix)
                     if (solucion_factible == True):
-                        #terminó la busqueda
+                        #Terminó la busqueda
                         print("Busqueda finalizada!!")
                         print("Total paths generados: " + str(total_de_paths_generados))
                         print("Profunidad del path exitoso: " + str(profundidad_del_path) + " estados") 
                         #Se envía listas a main.py para su posterior impresión
                         return path, paths_desechados
                     else:
-                        #print(("Found a neighbouring state with the fitness of {}".format(fitness_buffer)))
-                        #print(mejor_solucion)
-                        #print("---------------------------")
-
                         #Si se encuentra un vecino con mejor fitness, empezamos el loop general otra vez
                         #cambiando el valor de 'exit_vecinos'
                         exit_vecinos = True
