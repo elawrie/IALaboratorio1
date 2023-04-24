@@ -1,5 +1,4 @@
 from modelos.bitflip import bit_flip
-from modelos.isgoal import isgoal
 import copy
 
 def expand_node(matrix):

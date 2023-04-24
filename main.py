@@ -1,4 +1,4 @@
-from modelos.fitness import fitness
+from modelos.evaluate import evaluate
 from modelos.isgoal import isgoal
 from modelos.bitflip import bit_flip
 from modelos.expandnode import expand_node
@@ -16,7 +16,7 @@ def main():
     final_state = make_final()
 
     #Chequear el fitness y si el estado inicial es el "goal"
-    print("Costo: ", fitness(init_state, final_state))
+    print("Costo: ", evaluate(init_state, final_state))
     print("Es el estado objetivo? ", isgoal(init_state, final_state))
 
     #Realizar la búsqueda

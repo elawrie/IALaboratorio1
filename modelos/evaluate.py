@@ -1,6 +1,6 @@
 import numpy as np
 
-def fitness(estado_actual, estado_final):
+def evaluate(estado_actual, estado_final):
 
     #Retorna la diferencia de bits entra la matríz evaluada, y la de estado objetivo a conseguir.
     cost = 16*16

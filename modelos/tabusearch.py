@@ -1,6 +1,6 @@
 import numpy as np
 import copy
-from modelos.fitness import fitness
+from modelos.evaluate import evaluate
 from modelos.bitflip import bit_flip
 from modelos.isgoal import isgoal
 from lectura import make_initial
@@ -19,7 +19,7 @@ def tabu_search(initial_state, goal_state_matrix):
     total_de_paths_generados = 1
     solucion_inicial = initial_state
     mejor_solucion = initial_state
-    fitness_mejor_solucion = fitness(mejor_solucion, goal_state_matrix)
+    fitness_mejor_solucion = evaluate(mejor_solucion, goal_state_matrix)
     tabu_list.append(mejor_solucion) #Se agrega primer intento a la tabu list
 
 
@@ -52,7 +52,7 @@ def tabu_search(initial_state, goal_state_matrix):
                
             #Se ajustan variables para que nueva iteración funcione correctamente
             tabu_list.append(copy.deepcopy(mejor_solucion)) #Se agrega nueva Estado inicial a la tabu list
-            fitness_mejor_solucion = fitness(mejor_solucion, goal_state_matrix)
+            fitness_mejor_solucion = evaluate(mejor_solucion, goal_state_matrix)
             total_de_paths_generados += 1
             print(fitness_mejor_solucion)
             profundidad_del_path = 0
@@ -75,7 +75,7 @@ def tabu_search(initial_state, goal_state_matrix):
         #Recorrer todos los vecinos para comparar y buscar el vecino mejor 
         for neighbor in all_neighbors:
             if (exit_vecinos == False):
-                fitness_buffer = fitness(neighbor,goal_state_matrix)
+                fitness_buffer = evaluate(neighbor,goal_state_matrix)
                 #Si se encuentra un vecino mejor
                 if(fitness_buffer < fitness_mejor_solucion):
                     fitness_mejor_solucion = fitness_buffer

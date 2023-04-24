@@ -1,7 +1,7 @@
 import numpy as np
-from modelos.fitness import fitness
+from modelos.evaluate import evaluate
 def isgoal(estado_actual, estado_final):
-    if (fitness(estado_actual, estado_final) == 0):
+    if (evaluate(estado_actual, estado_final) == 0):
 
         #Si las matrices coinciden, se entrega TRue
         return True
