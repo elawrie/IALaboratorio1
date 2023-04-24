@@ -27,7 +27,7 @@ def tabu_search(initial_state, goal_state_matrix):
     while(profundidad_del_path < 126):
         #Si se han realizado 125 Estados desde un path inicial. Se instancia otro nuevo.
         if(profundidad_del_path == 125):
-            print("Path desechado. Se genera nueva solución inicial")
+            # print("Path desechado. Se genera nueva solución inicial")
             paths_desechados.append(path)
             path = [] #Se borra contenido de 'path' para crear otro completamente nuevo.
             soy_una_solucion_inicial_tabu = True 
@@ -37,14 +37,15 @@ def tabu_search(initial_state, goal_state_matrix):
                 soy_una_solucion_inicial_tabu = False
                 y = 0 #Corrige problema al pasar x como print(tabu_list[x]). Casting Error. 
                 for x in tabu_list:
-                    #Begin debugging
-                    print(" ---------------------------------")
-                    print("|     Elemento Tabu_list " + str(y+1) + "        |")
-                    print(" ---------------------------------")
-                    print(tabu_list[y]) 
-                    #End debugging#
+                    #Prueba los elementos en el tabu list
+                    # #Comienza debugging
+                    # print(" ---------------------------------")
+                    # print("|     Elemento Tabu_list " + str(y+1) + "        |")
+                    # print(" ---------------------------------")
+                    # print(tabu_list[y]) 
+                    # #Termina debugging#
                     if(isgoal(tabu_list[y], mejor_solucion) == True):
-                        print("Se ha encontrado una solución generada que es tabú")
+                        # print("Se ha encontrado una solución generada que es tabú")
                         soy_una_solucion_inicial_tabu = True
                     y +=1 #Solución temporal. Estoy seguro que se puede hacer de otra manera. Carlos
                 if(soy_una_solucion_inicial_tabu == False):
@@ -54,7 +55,6 @@ def tabu_search(initial_state, goal_state_matrix):
             tabu_list.append(copy.deepcopy(mejor_solucion)) #Se agrega nueva Estado inicial a la tabu list
             fitness_mejor_solucion = evaluate(mejor_solucion, goal_state_matrix)
             total_de_paths_generados += 1
-            print(fitness_mejor_solucion)
             profundidad_del_path = 0
                 
         #Se ajustan variables a usarse en bucle while anidado
@@ -84,7 +84,7 @@ def tabu_search(initial_state, goal_state_matrix):
                     solucion_factible = isgoal(neighbor,goal_state_matrix)
                     if (solucion_factible == True):
                         #Terminó la busqueda
-                        print("Busqueda finalizada!!")
+                        print("Busqueda finalizada")
                         print("Total paths generados: " + str(total_de_paths_generados))
                         print("Profunidad del path exitoso: " + str(profundidad_del_path) + " estados") 
                         #Se envía listas a main.py para su posterior impresión
