@@ -13,8 +13,7 @@ def tabu_search(initial_state, goal_state_matrix):
     paths_desechados = []
     solucion_factible = False
     costo_matriz = 0 #Se usa para ver que tan diferente es un estado de la 'goal_state_matrix'.
-    i = 0
-    j = 0
+
     profundidad_del_path = 0
     total_de_paths_generados = 1
     solucion_inicial = initial_state
@@ -35,7 +34,7 @@ def tabu_search(initial_state, goal_state_matrix):
             if(soy_una_solucion_inicial_tabu == True):
                 mejor_solucion = make_initial()
                 soy_una_solucion_inicial_tabu = False
-                y = 0 
+                y = 0
                 for x in tabu_list:
                     #Prueba los elementos en el tabu list
                     # #Comienza debugging
@@ -47,7 +46,7 @@ def tabu_search(initial_state, goal_state_matrix):
                     if(isgoal(tabu_list[y], mejor_solucion) == True):
                         # print("Se ha encontrado una solución generada que es tabú")
                         soy_una_solucion_inicial_tabu = True
-                    y +=1 
+                    y +=1
                 if(soy_una_solucion_inicial_tabu == False):
                     path.append(mejor_solucion)
                
@@ -59,8 +58,7 @@ def tabu_search(initial_state, goal_state_matrix):
                 
         #Se ajustan variables a usarse en bucle while anidado
         exit_vecinos = False
-        i=0
-        j=0
+
 
         '''
         Estos dos ciclos while seran terminados tan pronto como se encuentre un vecino de 'mejor_solucion'
