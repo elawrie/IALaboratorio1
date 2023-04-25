@@ -35,7 +35,7 @@ def tabu_search(initial_state, goal_state_matrix):
             if(soy_una_solucion_inicial_tabu == True):
                 mejor_solucion = make_initial()
                 soy_una_solucion_inicial_tabu = False
-                y = 0 #Corrige problema al pasar x como print(tabu_list[x]). Casting Error. 
+                y = 0 
                 for x in tabu_list:
                     #Prueba los elementos en el tabu list
                     # #Comienza debugging
@@ -47,7 +47,7 @@ def tabu_search(initial_state, goal_state_matrix):
                     if(isgoal(tabu_list[y], mejor_solucion) == True):
                         # print("Se ha encontrado una solución generada que es tabú")
                         soy_una_solucion_inicial_tabu = True
-                    y +=1 #Solución temporal. Estoy seguro que se puede hacer de otra manera. Carlos
+                    y +=1 
                 if(soy_una_solucion_inicial_tabu == False):
                     path.append(mejor_solucion)
                
