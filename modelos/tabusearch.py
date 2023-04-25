@@ -94,5 +94,5 @@ def tabu_search(initial_state, goal_state_matrix):
             else:
                 break
 
-        #Se actualiza registro de la profundiad del path actual buscado
+        #Se actualiza registro de la profundiad del path actual buscado.
         profundidad_del_path += 1 
