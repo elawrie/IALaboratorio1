@@ -5,7 +5,7 @@ Lab 1  Inteligencia artificial.
 Resolución mediante tabu search
 
 
-Link overleaf explicando el programa brevemente en detalle. Tamaño 2 hojas: https://www.overleaf.com/5673928846rbyfynsjcdcr
+Link overleaf explicando el programa brevemente en detalle. Tamaño 2 hojas.
 
 
 https://www.overleaf.com/read/nmzkntkzxnkj
