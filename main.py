@@ -32,7 +32,7 @@ def main():
     paths_desechados = []
     path,paths_desechados = tabu_search(init_state,final_state)
     print("Path generado: ")
-    y = 0 #Corrige problema al pasar x como print(tabu_list[x]). Casting Error. 
+    y = 0 
     for x in path:
         print(" ---------------------------------")
         print("|   Estado path número " + str(y+1) + "        |")
